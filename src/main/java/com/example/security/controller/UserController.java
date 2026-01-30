@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.security.entity.User;
+import com.example.security.pojo.LoginData;
 import com.example.security.pojo.SignupData;
 import com.example.security.service.UserService;
 
@@ -30,6 +31,20 @@ public class UserController {
 		response.put("Data", registerUser);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		
+	}
+	
+	
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestBody LoginData loginData) throws Exception{
+		String login = userService.login(loginData);
+		Map<String,Object> response = new HashMap<>();
+		response.put("Status", "OK");
+		response.put("Token", login);
+		
+		
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 		
 	}
 }
